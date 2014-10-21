@@ -1,0 +1,97 @@
+@black: #000000;
+@grey:  #404040;
+@white: #FFFFFF;
+
+body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, table, tr, th, td {
+  font-weight: normal;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background: none;
+
+  font-family: Arial, Verdana, sans-serif;
+  font-size: 12px;
+
+  color: #202020;
+
+  a {
+    color: #202020;
+    text-decoration: none;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+div.centered {
+  display: block;
+  margin: 0px auto;
+  width: 90%;
+}
+
+.clear {
+  clear: both;
+}
+
+#header {
+  #header-logo {
+    float: left;
+    padding: 10px 0px;
+
+    // remove when text is replaced by logo
+    font-size: 24px;
+  }
+}
+
+#menu-bar {
+  clear: both;
+  float: left;
+  width: 100%;
+  background: @black;
+
+  #menu {
+    float: left;
+
+    li {
+      float: left;
+
+      a {
+        display: block;
+
+        font-size: 14px;
+        font-weight: bold;
+
+        color: @white;
+        text-decoration: none;
+
+        padding: 20px 10px 5px;
+      }
+
+      a.active, a:hover {
+        background: @grey;
+      }
+    }
+  }
+}
+
+#body {
+  min-height: 200px;
+}
+
+#footer {
+  background: @black;
+  color: @white;
+
+  word-wrap: break-word;
+  text-transform: uppercase;
+
+  height: 200px;
+  padding-top: 10px;
+}
