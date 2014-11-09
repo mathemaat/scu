@@ -3,15 +3,15 @@
 abstract class Handler
 {
   protected $arguments;
-  
+
   protected $activeSeason;
   protected $selectedSeason;
 
   public function __construct($arguments) {
     $this->arguments = $arguments;
-    
+
     $activeSeason = Util::getActiveSeason();
-    
+
     $this->activeSeason   = $activeSeason;
     $this->selectedSeason = $activeSeason;
   }
@@ -35,44 +35,56 @@ abstract class Handler
 
   public function getTemplateVariablesOutline() {
     return array(
-      'docroot'             => APPLICATION_DOCROOT,
-      'title'               => APPLICATION_TITLE,
-      'menu'                => self::getMenu(),
-      'year'                => date('Y')
+      'docroot' => APPLICATION_DOCROOT,
+      'title'   => APPLICATION_TITLE,
+      'menu'    => self::getMenu(),
+      'year'    => date('Y')
     );
   }
 
-  protected static function getMenu() {
-    $menuItems = array(
-      'index'  => 'Home',
-      'nieuws' => 'Nieuws',
-      'intern' => 'Intern',
-      'extern' => 'Extern',
-    );
+  protected static function getMenuItems() {
+    $dbHandler = Application::getInstance()->getDBHandler();
 
+    $query =
+      'SELECT mni_id, mni_description, mni_token ' .
+      'FROM tblmenuitem ' .
+      'ORDER BY mni_sort_order';
+    $statement = $dbHandler->prepare($query);
+    $statement->execute();
+
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  protected static function getMenu() {
     $uri = Router::getRequestUri();
 
-    $listItems = array();
-    foreach ($menuItems as $key => $menuItem) {
-      if ($key == 'home' && $uri == '')
-        $class = "class='active'";
-      else
-        $class = $key == $uri ? "class='active'" : "";
+    $items = array();
 
-      $url = sprintf("<a href='%s/%s' %s>%s</a>", APPLICATION_DOCROOT, $key, $class, strtoupper($menuItem));
+    // voeg de home knop toe aan het menu
+    if ($uri == '' || $uri == 'index')
+      $class = "class='active'";
+    else
+      $class = '';
 
-      $listItems[] = sprintf("<li>%s</li>", $url);
+    $items[] = sprintf("<li><a href='%s/index' %s>HOME</a></li>", APPLICATION_DOCROOT, $class);
+
+    // voeg de overige menuitems toe aan het menu
+    $menuItems = self::getMenuItems();
+    foreach ($menuItems as $menuItem) {
+      $class = $menuItem['mni_token'] == $uri ? "class='active'" : "";
+
+      $items[] = sprintf("<li><a href='%s/%s' %s>%s</a></li>", APPLICATION_DOCROOT, $menuItem['mni_token'], $class, strtoupper($menuItem['mni_description']));
     }
 
-    return sprintf("<ul>%s</ul>", implode('', $listItems));
+    return sprintf("<ul>%s</ul>", implode('', $items));
   }
 
   public function getSeasonWindow() {
     $format = Util::getTemplate('season_window');
-    
+
     $previousSeason = Util::getPreviousSeason($this->selectedSeason['sea_start_date']);
     $nextSeason     = Util::getNextSeason($this->selectedSeason['sea_start_date']);
-    
+
     if ($previousSeason) {
       $previousSeasonHTML = sprintf(
         "<a href='#' title='Ga naar seizoen %s'>◄</a>",
@@ -81,7 +93,7 @@ abstract class Handler
     }
     else
       $previousSeasonHTML = '&nbsp;';
-    
+
     if ($nextSeason) {
       $nextSeasonHTML = sprintf(
         "<a href='#' title='Ga naar seizoen %s'>►</a>",
@@ -90,13 +102,13 @@ abstract class Handler
     }
     else
       $nextSeasonHTML = '&nbsp;';
-    
+
     $variables = array(
       'title'      => $this->selectedSeason['sea_description'],
       'previous'   => $previousSeasonHTML,
       'next'       => $nextSeasonHTML,
     );
-    
+
     return Util::formatString($format, $variables);
   }
 }

@@ -70,24 +70,24 @@ class Util
   public static function redirectToIndex() {
     self::redirect('index');
   }
-  
+
   public static function getActiveSeason() {
     $dbHandler = Application::getInstance()->getDBHandler();
-    
+
     $query =
       "SELECT sea_id, sea_description, sea_start_date " .
       "FROM tblseason " .
       "WHERE sea_active = 1";
-    
+
     $statement = $dbHandler->prepare($query);
     $statement->execute();
-    
+
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
-  
+
   public static function getPreviousSeason($date) {
     $dbHandler = Application::getInstance()->getDBHandler();
-    
+
     $query =
       "SELECT sea_id, sea_description, sea_start_date " .
       "FROM tblseason " .
@@ -96,16 +96,16 @@ class Util
       "ORDER BY sea_start_date DESC " .
       "LIMIT 1";
     $params = array($date);
-    
+
     $statement = $dbHandler->prepare($query);
     $statement->execute($params);
-    
+
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
-  
+
   public static function getNextSeason($date) {
     $dbHandler = Application::getInstance()->getDBHandler();
-    
+
     $query =
       "SELECT sea_id, sea_description, sea_start_date " .
       "FROM tblseason " .
@@ -114,10 +114,10 @@ class Util
       "ORDER BY sea_start_date " .
       "LIMIT 1";
     $params = array($date);
-    
+
     $statement = $dbHandler->prepare($query);
     $statement->execute($params);
-    
+
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
 }
