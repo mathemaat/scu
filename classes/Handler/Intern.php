@@ -1,9 +1,9 @@
 <?php
 
-class Handler_Nieuws extends Handler_MenuItem
+class Handler_Intern extends Handler_MenuItem
 {
   public function __construct($arguments) {
-    self::$token = 'NEWS';
+    self::$token = 'INTERNAL';
 
     parent::__construct($arguments);
   }

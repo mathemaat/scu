@@ -5,6 +5,7 @@ require_once 'classes/Autoloader.php';
 class Application
 {
   private static $instance;
+  private static $dbHandler;
 
   private function __construct() {
     /* Setup PHP session */
@@ -12,6 +13,8 @@ class Application
     session_start();
 
     set_exception_handler(array(__CLASS__, 'handleException'));
+
+    self::$dbHandler = new PDO('mysql:host='.MYSQL_HOST.';dbname='.MYSQL_DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD);
   }
 
   public static function getInstance() {
@@ -19,6 +22,10 @@ class Application
       self::$instance = new self();
 
     return self::$instance;
+  }
+  
+  public function getDBHandler() {
+     return self::$dbHandler;
   }
 
   public static function handleException($exception) {

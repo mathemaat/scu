@@ -3,9 +3,17 @@
 abstract class Handler
 {
   protected $arguments;
+  
+  protected $activeSeason;
+  protected $selectedSeason;
 
   public function __construct($arguments) {
     $this->arguments = $arguments;
+    
+    $activeSeason = Util::getActiveSeason();
+    
+    $this->activeSeason   = $activeSeason;
+    $this->selectedSeason = $activeSeason;
   }
 
   public abstract function handleRequest();
@@ -37,7 +45,9 @@ abstract class Handler
   protected static function getMenu() {
     $menuItems = array(
       'index'  => 'Home',
-      'nieuws' => 'Nieuws'
+      'nieuws' => 'Nieuws',
+      'intern' => 'Intern',
+      'extern' => 'Extern',
     );
 
     $uri = Router::getRequestUri();
@@ -55,5 +65,38 @@ abstract class Handler
     }
 
     return sprintf("<ul>%s</ul>", implode('', $listItems));
+  }
+
+  public function getSeasonWindow() {
+    $format = Util::getTemplate('season_window');
+    
+    $previousSeason = Util::getPreviousSeason($this->selectedSeason['sea_start_date']);
+    $nextSeason     = Util::getNextSeason($this->selectedSeason['sea_start_date']);
+    
+    if ($previousSeason) {
+      $previousSeasonHTML = sprintf(
+        "<a href='#' title='Ga naar seizoen %s'>◄</a>",
+        $previousSeason['sea_description']
+      );
+    }
+    else
+      $previousSeasonHTML = '&nbsp;';
+    
+    if ($nextSeason) {
+      $nextSeasonHTML = sprintf(
+        "<a href='#' title='Ga naar seizoen %s'>►</a>",
+        $nextSeason['sea_description']
+      );
+    }
+    else
+      $nextSeasonHTML = '&nbsp;';
+    
+    $variables = array(
+      'title'      => $this->selectedSeason['sea_description'],
+      'previous'   => $previousSeasonHTML,
+      'next'       => $nextSeasonHTML,
+    );
+    
+    return Util::formatString($format, $variables);
   }
 }

@@ -1,1 +1,146 @@
-body,div,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,table,tr,th,td{font-weight:400;margin:0;padding:0}body{background:0 0;font-family:Arial,Verdana,sans-serif;font-size:12px;color:#202020}body a{color:#202020;text-decoration:none}ul{list-style:none}a:hover{text-decoration:underline}div.centered{display:block;margin:0 auto;width:90%}.clear{clear:both}#header #header-logo{float:left;padding:10px 0;font-size:24px}#menu-bar{clear:both;float:left;width:100%;background:#000}#menu-bar #menu{float:left}#menu-bar #menu li{float:left}#menu-bar #menu li a{display:block;font-size:14px;font-weight:700;color:#fff;text-decoration:none;padding:20px 10px 5px}#menu-bar #menu li a.active,#menu-bar #menu li a:hover{background:#404040}#body{min-height:200px}#footer{background:#000;color:#fff;word-wrap:break-word;text-transform:uppercase;height:200px;padding-top:10px}
+body,
+div,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+p,
+blockquote,
+table,
+tr,
+th,
+td {
+  font-weight: normal;
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  background: none;
+  font-family: Arial, Verdana, sans-serif;
+  font-size: 12px;
+  color: #202020;
+}
+body a {
+  color: #202020;
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+div.centered {
+  display: block;
+  margin: 0px auto;
+  width: 90%;
+}
+.clear {
+  clear: both;
+}
+#header #header-logo {
+  float: left;
+  padding: 10px 0px;
+  font-size: 24px;
+}
+#menu-bar {
+  clear: both;
+  float: left;
+  width: 100%;
+  background: #000000;
+}
+#menu-bar #menu {
+  float: left;
+}
+#menu-bar #menu li {
+  float: left;
+}
+#menu-bar #menu li a {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 20px 10px 4px;
+}
+#menu-bar #menu li a.active,
+#menu-bar #menu li a:hover {
+  background: #404040;
+}
+#body {
+  min-height: 200px;
+}
+#footer {
+  background: #000000;
+  color: #ffffff;
+  word-wrap: break-word;
+  text-transform: uppercase;
+  height: 200px;
+  padding-top: 10px;
+}
+#season-window {
+  height: 32px;
+  padding-top: 96px;
+}
+#season-window .season-bar {
+  background: #000000;
+  color: #ffffff;
+  /*
+    filter: alpha(opacity=75);
+    opacity: 0.75;
+    */
+  line-height: 28px;
+  height: 28px;
+}
+#season-window .season-bar .season-navigation,
+#season-window .season-bar .season-title {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+}
+#season-window .season-bar .season-navigation {
+  width: 5%;
+  text-align: center;
+}
+#season-window .season-bar .season-navigation.previous {
+  float: left;
+}
+#season-window .season-bar .season-navigation.next {
+  float: right;
+}
+#season-window .season-bar .season-navigation a {
+  color: #ffffff;
+}
+#season-window .season-bar .season-navigation a:hover {
+  text-decoration: none;
+}
+#season-window .season-bar .season-title {
+  overflow: hidden;
+  padding: 0px 10px;
+}
+#post-history {
+  margin-top: 12px;
+}
+#post-history #tabs {
+  float: left;
+  width: 180px;
+  padding: 0px 10px;
+}
+#post-history #main {
+  overflow: hidden;
+  min-height: 320px;
+}
+#post-history #main h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
