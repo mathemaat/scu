@@ -8,10 +8,18 @@ body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, texta
   padding: 0px;
 }
 
+h1, h3 {
+  font-weight: bold;
+}
+
+h4 {
+  font-style: italic;
+}
+
 body {
   background: none;
 
-  font-family: Arial, Verdana, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   font-size: 12px;
 
   color: #202020;
@@ -155,6 +163,9 @@ div.centered {
     
     width: 180px;
     padding: 0px 10px;
+    
+    font-size: 16px;
+    text-transform: uppercase;
   }
   
   #main {
@@ -162,9 +173,29 @@ div.centered {
     
     min-height: 320px;
     
-    h3 {
+    h1 {
       font-size: 18px;
       margin-bottom: 8px;
+    }
+    
+    #posts {
+      div.post {
+        border-bottom: 1px solid @grey;
+        padding: 4px;
+        
+        h3 {
+          font-size: 16px;
+        }
+        
+        h4 {
+          font-size: 14px;
+          color: @grey;
+        }
+        
+        p {
+          margin-top: 8px;
+        }
+      }
     }
   }
 }

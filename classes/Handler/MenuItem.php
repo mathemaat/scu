@@ -1,42 +1,51 @@
 <?php
 
-abstract class Handler_MenuItem extends Handler
+class Handler_MenuItem extends Handler
 {
-  // de gegevens van het betreffende menuitem
+  // de gegevens van het geselecteerde menuitem
   protected static $properties;
 
-  // de tabbladen van het betreffende menuitem
+  // de tabbladen van het geselecteerde menuitem
   protected static $tabs;
 
-  // het standaard tabblad van het betreffende menuitem
+  // het standaard tabblad van het geselecteerde menuitem
   protected static $defaultTab;
 
-  // de gevraagde informatie van het betreffende menuitem, waaronder tabblad en seizoen
+  // de gegevens van het geselecteerde menuitem
+  protected static $selectedTab;
+
+  // de artikelen van het geselecteerde menuitem en tabblad
+  protected static $posts;
+
+  // de gevraagde informatie van het geselecteerde menuitem, waaronder tabblad en seizoen
   protected static $GETParams;
 
   public function __construct($arguments) {
     parent::__construct($arguments);
-
-    self::loadProperties();
+    
+    self::loadProperties($arguments[0]);
+    
+    self::$tabs        = self::getTabs();
+    self::$defaultTab  = self::getDefaultTab();
+    
     self::setGETParams();
+    
+    self::$selectedTab = self::getSelectedTab();
+    self::$posts       = self::getPosts();
   }
 
-  protected static function loadProperties() {
-    $uri = Router::getRequestUri();
-
+  protected static function loadProperties($token) {
     $dbHandler = Application::getInstance()->getDBHandler();
 
     $query =
       'SELECT mni_id, mni_description, mni_token, mni_has_tabs ' .
       'FROM tblmenuitem ' .
       'WHERE mni_token = ?';
-    $params = array($uri);
+    $params = array($token);
     $statement = $dbHandler->prepare($query);
     $statement->execute($params);
 
-    self::$properties = $statement->fetch(PDO::FETCH_ASSOC);
-    self::$tabs       = self::getTabs();
-    self::$defaultTab = self::getDefaultTab();
+    self::$properties  = $statement->fetch(PDO::FETCH_ASSOC);
   }
 
   // leest de $_GET parameters uit om uit te zoeken welke informatie de gebruiker opvraagt
@@ -55,39 +64,6 @@ abstract class Handler_MenuItem extends Handler
 
     if (array_key_exists('tab', $_GET) && in_array($_GET['tab'], array_keys(self::$tabs)))
       self::$GETParams['tab'] = $_GET['tab'];
-  }
-
-  // create a link part containing the $_GET parameters based on $params
-  protected function getGETParamsLinkPart($params) {
-    $parts = array();
-
-    if ($params['season'] > 0)
-      $parts[] = 'season=' . htmlspecialchars($params['season']);
-
-    if (strlen($params['tab']) >= 1 && in_array($params['tab'], array_keys(self::$tabs)))
-      $parts[] = 'tab=' . htmlspecialchars($params['tab']);
-
-    if (count($parts) >= 1)
-      return '?' . implode('&', $parts);
-
-    return '';
-  }
-
-  public function handleRequest() {
-    if (self::$properties['mni_has_tabs'])
-      $template = Util::getTemplate('post-history');
-    else
-      $template = Util::getTemplate('post-history-no-tabs');
-
-    $variables = array(
-      'tabs'  => $this->getTabsHtml(),
-      'title' => self::$properties['mni_description'],
-      'posts' => 'Posts here'
-    );
-
-    $body = $this->getSeasonWindow() . Util::formatString($template, $variables);
-
-    echo $this->formatTemplate(array('body' => $body));
   }
 
   protected static function getTabs() {
@@ -115,7 +91,7 @@ abstract class Handler_MenuItem extends Handler
     $dbHandler = Application::getInstance()->getDBHandler();
 
     $query =
-      'SELECT tab_description, tab_token ' .
+      'SELECT tab_id, tab_description, tab_token ' .
       'FROM tbltab ' .
       'WHERE tab_mni_id = ? ' .
       'AND tab_default = 1';
@@ -125,7 +101,63 @@ abstract class Handler_MenuItem extends Handler
 
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
+  
+  protected static function getSelectedTab() {
+    $dbHandler = Application::getInstance()->getDBHandler();
 
+    $query =
+      'SELECT tab_id, tab_description, tab_token ' .
+      'FROM tbltab ' .
+      'WHERE tab_token = ?';
+    $params = array(self::$GETParams['tab']);
+    $statement = $dbHandler->prepare($query);
+    $statement->execute($params);
+
+    return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+  
+  protected static function getPosts() {
+    $dbHandler = Application::getInstance()->getDBHandler();
+
+    $query =
+      'SELECT pst_id, pst_date, pst_title, pst_contents ' .
+      'FROM tblpost ' .
+      'WHERE pst_mni_id = ? ';
+    $params = array(self::$properties['mni_id']);
+    
+    if (self::$properties['mni_has_tabs']) {
+      $query .= 'AND pst_tab_id = ?';
+      $params[] = self::$selectedTab['tab_id'];
+    }
+    
+    if (self::$GETParams['season']) {
+      $query .= 'AND pst_sea_id = ?';
+      $params[] = self::$GETParams['season'];
+    }
+    
+    $statement = $dbHandler->prepare($query);
+    $statement->execute($params);
+
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+  }
+  
+  public function handleRequest() {
+    if (self::$properties['mni_has_tabs'])
+      $template = Util::getTemplate('post-history');
+    else
+      $template = Util::getTemplate('post-history-no-tabs');
+
+    $variables = array(
+      'tabs'  => $this->getTabsHtml(),
+      'title' => self::$properties['mni_has_tabs'] ? self::$selectedTab['tab_description'] : self::$properties['mni_description'],
+      'posts' => $this->getPostsHtml()
+    );
+
+    $body = $this->getSeasonWindow() . Util::formatString($template, $variables);
+
+    echo $this->formatTemplate(array('body' => $body));
+  }
+  
   public function getTabsHtml() {
     $items = array();
     foreach(self::$tabs as $token => $description) {
@@ -143,5 +175,42 @@ abstract class Handler_MenuItem extends Handler
     }
 
     return '<ul>' . implode('', $items) . '</ul>';
+  }
+  
+  protected function getPostsHtml() {
+    if (count(self::$posts) == 0)
+      return 'Er zijn nog geen artikelen geschreven voor deze pagina.';
+    
+    $template = Util::getTemplate('post-cell');
+    
+    $items = array();
+    foreach(self::$posts as $post) {
+      $variables = array(
+        'post-id'       => $post['pst_id'],
+        'title'         => $post['pst_title'],
+        'creation-info' => date('d-m-Y', strtotime($post['pst_date'])),
+        'contents'      => substr($post['pst_contents'], 0, 200)
+      );
+      
+      $items[] = Util::formatString($template, $variables);
+    }
+    
+    return implode('', $items);
+  }
+  
+  // create a link part containing the $_GET parameters based on $params
+  protected function getGETParamsLinkPart($params) {
+    $parts = array();
+
+    if ($params['season'] > 0)
+      $parts[] = 'season=' . htmlspecialchars($params['season']);
+
+    if (strlen($params['tab']) >= 1 && in_array($params['tab'], array_keys(self::$tabs)))
+      $parts[] = 'tab=' . htmlspecialchars($params['tab']);
+
+    if (count($parts) >= 1)
+      return '?' . implode('&', $parts);
+
+    return '';
   }
 }

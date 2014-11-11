@@ -18,15 +18,25 @@ class Router
   }
 
   public static function route() {
+    // splits de uri van de opgevraagde pagina op basis van '/',
+    // zodat we stap voor stap kunnen uitlezen welke pagina de gebruiker heeft opgevraagd
     self::$requestUri = isset($_GET['q']) ? $_GET['q'] : '';
     $components = explode('/', self::$requestUri);
 
-    $handler = Util::toCamelCase(array_shift($components));
-    if ($handler == null) {
+    if (count($components) >= 1 && strlen($components[0]) >= 1) {
+      $handler = Util::toCamelCase($components[0]);
+      
+      // als de opgevraagde pagina een menuitem betreft, bewaar dan nog even welke dit was
+      if (self::isMenuItem($handler))
+        $handler = 'MenuItem';
+      else
+        array_shift($components);
+    }
+    else {
       self::$requestUri = 'index';
       $handler          = 'Index';
     }
-
+    
     $className = 'Handler_' . $handler;
 
     // check whether class exists
@@ -40,6 +50,20 @@ class Router
 
     self::$handler = new $className($components);
     self::$handler->handleRequest();
+  }
+  
+  protected static function isMenuItem($token) {
+    $dbHandler = Application::getInstance()->getDBHandler();
+
+    $query =
+      'SELECT mni_id ' .
+      'FROM tblmenuitem ' .
+      'WHERE mni_token = ?';
+    $params = array($token);
+    $statement = $dbHandler->prepare($query);
+    $statement->execute($params);
+
+    return $statement->fetch(PDO::FETCH_COLUMN);
   }
 
   public static function notFound() {

@@ -46,8 +46,15 @@ abstract class Handler
     $dbHandler = Application::getInstance()->getDBHandler();
 
     $query =
-      'SELECT mni_id, mni_description, mni_token ' .
+      'SELECT mni_description, mni_token, mni_has_tabs, tab_token ' .
       'FROM tblmenuitem ' .
+      'LEFT JOIN tbltab ON tab_id = (' .
+        'SELECT tab_id ' .
+        'FROM tbltab ' .
+        'WHERE tab_mni_id = mni_id ' .
+        'AND tab_default = 1 ' .
+        'LIMIT 1' .
+      ') ' .
       'ORDER BY mni_sort_order';
     $statement = $dbHandler->prepare($query);
     $statement->execute();
@@ -73,7 +80,14 @@ abstract class Handler
     foreach ($menuItems as $menuItem) {
       $class = $menuItem['mni_token'] == $uri ? "class='active'" : "";
 
-      $items[] = sprintf("<li><a href='%s/%s' %s>%s</a></li>", APPLICATION_DOCROOT, $menuItem['mni_token'], $class, strtoupper($menuItem['mni_description']));
+      if ($menuItem['mni_has_tabs'])
+        $url = sprintf('%s/%s?tab=%s', APPLICATION_DOCROOT, $menuItem['mni_token'], $menuItem['tab_token']);
+      else
+        $url = sprintf('%s/%s', APPLICATION_DOCROOT, $menuItem['mni_token']);
+      
+      $items[] = sprintf(
+        "<li><a href='%s' %s>%s</a></li>", $url, $class, strtoupper($menuItem['mni_description'])
+      );
     }
 
     return sprintf("<ul>%s</ul>", implode('', $items));

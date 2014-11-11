@@ -24,9 +24,16 @@ td {
   margin: 0px;
   padding: 0px;
 }
+h1,
+h3 {
+  font-weight: bold;
+}
+h4 {
+  font-style: italic;
+}
 body {
   background: none;
-  font-family: Arial, Verdana, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   font-size: 12px;
   color: #202020;
 }
@@ -135,12 +142,28 @@ div.centered {
   float: left;
   width: 180px;
   padding: 0px 10px;
+  font-size: 16px;
+  text-transform: uppercase;
 }
 #post-history #main {
   overflow: hidden;
   min-height: 320px;
 }
-#post-history #main h3 {
+#post-history #main h1 {
   font-size: 18px;
   margin-bottom: 8px;
+}
+#post-history #main #posts div.post {
+  border-bottom: 1px solid #404040;
+  padding: 4px;
+}
+#post-history #main #posts div.post h3 {
+  font-size: 16px;
+}
+#post-history #main #posts div.post h4 {
+  font-size: 14px;
+  color: #404040;
+}
+#post-history #main #posts div.post p {
+  margin-top: 8px;
 }
