@@ -32,14 +32,7 @@ h4 {
   font-style: italic;
 }
 body {
-  background: none;
-  font-family: Verdana, Arial, sans-serif;
-  font-size: 12px;
-  color: #202020;
-}
-body a {
-  color: #202020;
-  text-decoration: none;
+  background: url('../static/img/pieces.png');
 }
 ul {
   list-style: none;
@@ -55,19 +48,30 @@ div.centered {
 .clear {
   clear: both;
 }
+#outline {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 12px;
+  background: #ffffff;
+  max-width: 1024px;
+  margin: 0px auto;
+  border-width: 0px 1px;
+  border-style: solid;
+  border-color: #A0A0A0;
+  color: #202020;
+}
+#outline a {
+  color: #202020;
+  text-decoration: none;
+}
 #header #header-logo {
   float: left;
   padding: 10px 0px;
   font-size: 24px;
+  color: #402010;
 }
 #menu-bar {
-  clear: both;
-  float: left;
   width: 100%;
-  background: #000000;
-}
-#menu-bar #menu {
-  float: left;
+  background: #804020;
 }
 #menu-bar #menu li {
   float: left;
@@ -82,13 +86,15 @@ div.centered {
 }
 #menu-bar #menu li a.active,
 #menu-bar #menu li a:hover {
-  background: #404040;
+  background: #8c5336;
 }
 #body {
-  min-height: 200px;
+  min-height: 400px;
+  color: #402010;
+  padding-bottom: 12px;
 }
 #footer {
-  background: #000000;
+  background: #804020;
   color: #ffffff;
   word-wrap: break-word;
   text-transform: uppercase;
@@ -97,22 +103,21 @@ div.centered {
 }
 #season-window {
   height: 32px;
-  padding-top: 96px;
+  padding-top: 208px;
+  background: url('../static/img/window.jpg');
 }
 #season-window .season-bar {
-  background: #000000;
+  background: #804020;
   color: #ffffff;
-  /*
-    filter: alpha(opacity=75);
-    opacity: 0.75;
-    */
-  line-height: 28px;
-  height: 28px;
+  filter: alpha(opacity=75);
+  opacity: 0.75;
+  line-height: 32px;
+  height: 32px;
 }
 #season-window .season-bar .season-navigation,
 #season-window .season-bar .season-title {
   display: block;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 #season-window .season-bar .season-navigation {
@@ -126,7 +131,13 @@ div.centered {
   float: right;
 }
 #season-window .season-bar .season-navigation a {
+  display: block;
+  width: 100%;
   color: #ffffff;
+}
+#season-window .season-bar .season-navigation:hover {
+  background: #8c5336;
+  cursor: pointer;
 }
 #season-window .season-bar .season-navigation a:hover {
   text-decoration: none;
@@ -161,7 +172,7 @@ div.centered {
   font-size: 16px;
 }
 #post-history #main #posts div.post h4 {
-  font-size: 14px;
+  font-size: 12px;
   color: #404040;
 }
 #post-history #main #posts div.post p {

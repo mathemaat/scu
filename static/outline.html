@@ -6,28 +6,36 @@
     <link href="%(docroot)s/static/application.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div id="header">
-      <div class="centered">
-        <div id="header-logo">
-          <!-- to do: replace by logo -->
-          %(title)s
+    <div id="outline">
+      <div id="header">
+        <div class="centered">
+          <div id="header-logo">
+            <!-- to do: replace by logo -->
+            %(title)s
+          </div>
+          <br class="clear" />
         </div>
       </div>
-    </div>
-    <div id="menu-bar">
-      <div class="centered">
-        <div id="menu">
-          %(menu)s
+      <div id="menu-bar">
+        <div class="centered">
+          <div id="menu">
+            %(menu)s
+            <br class="clear" />
+          </div>
         </div>
       </div>
-    </div>
-    <br class="clear" />
-    <div id="body">
-      %(body)s
-    </div>
-    <div id="footer">
-      <div class="centered">
-        <span>&copy; %(year)s</span><br />
+      <div id="body">
+        %(body)s
+      </div>
+      <div id="footer">
+        <div class="centered">
+          <span>Nationaal Denksportcentrum Den Hommel</span><br />
+          <span>Kennedylaan 9</span><br />
+          <span>3533 KH Utrecht</span><br />
+          <span>T: 030-2759999</span><br />
+          <br/>
+          <span>&copy; %(year)s</span><br />
+        </div>
       </div>
     </div>
   </body>

@@ -2,6 +2,12 @@
 @grey:  #404040;
 @white: #FFFFFF;
 
+// palette: http://www.color-hex.com/color/804020
+@brown: #804020;
+@brown-light: #8c5336;
+
+@text: #402010;
+
 body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, table, tr, th, td {
   font-weight: normal;
   margin: 0px;
@@ -17,17 +23,8 @@ h4 {
 }
 
 body {
-  background: none;
-
-  font-family: Verdana, Arial, sans-serif;
-  font-size: 12px;
-
-  color: #202020;
-
-  a {
-    color: #202020;
-    text-decoration: none;
-  }
+// chess pieces: http://unicode-table.com/en/sets/chess-symbols/
+  background: url('../static/img/pieces.png');
 }
 
 ul {
@@ -48,6 +45,27 @@ div.centered {
   clear: both;
 }
 
+#outline {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 12px;
+
+  background: @white;
+
+  max-width: 1024px;
+  margin: 0px auto;
+
+  border-width: 0px 1px;
+  border-style: solid;
+  border-color: #A0A0A0;
+
+  color: #202020;
+
+  a {
+    color: #202020;
+    text-decoration: none;
+  }
+}
+
 #header {
   #header-logo {
     float: left;
@@ -55,18 +73,16 @@ div.centered {
 
     // remove when text is replaced by logo
     font-size: 24px;
+
+    color: @text;
   }
 }
 
 #menu-bar {
-  clear: both;
-  float: left;
   width: 100%;
-  background: @black;
+  background: @brown;
 
   #menu {
-    float: left;
-
     li {
       float: left;
 
@@ -83,18 +99,22 @@ div.centered {
       }
 
       a.active, a:hover {
-        background: @grey;
+        background: @brown-light;
       }
     }
   }
 }
 
 #body {
-  min-height: 200px;
+  min-height: 400px;
+  
+  color: @text;
+  
+  padding-bottom: 12px;
 }
 
 #footer {
-  background: @black;
+  background: @brown;
   color: @white;
 
   word-wrap: break-word;
@@ -106,50 +126,58 @@ div.centered {
 
 #season-window {
   height: 32px;
-  padding-top: 96px;
-  
+  padding-top: 208px;
+
+// source: http://abstract.desktopnexus.com/wallpaper/1054027/
+  background: url('../static/img/window.jpg');
+
   .season-bar {
-    background: @black;
+    background: #804020;
     color: @white;
-    
-    /*
+
     filter: alpha(opacity=75);
     opacity: 0.75;
-    */
-    
-    line-height: 28px;
-    height: 28px;
-    
+
+    line-height: 32px;
+    height: 32px;
+
     .season-navigation, .season-title {
       display: block;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
     }
-    
+
     .season-navigation {
       width: 5%;
       text-align: center;
     }
-    
+
     .season-navigation.previous {
       float: left;
     }
-    
+
     .season-navigation.next {
       float: right;
     }
-    
+
     .season-navigation a {
+      display: block;
+      width: 100%;
       color: @white;
+    }
+
+    .season-navigation:hover {
+      background: @brown-light;
+      cursor: pointer;
     }
     
     .season-navigation a:hover {
       text-decoration: none;
     }
-    
+
     .season-title {
       overflow: hidden;
-      
+
       padding: 0px 10px;
     }
   }
@@ -157,41 +185,41 @@ div.centered {
 
 #post-history {
   margin-top: 12px;
-  
+
   #tabs {
     float: left;
-    
+
     width: 180px;
     padding: 0px 10px;
-    
+
     font-size: 16px;
     text-transform: uppercase;
   }
-  
+
   #main {
     overflow: hidden;
-    
+
     min-height: 320px;
-    
+
     h1 {
       font-size: 18px;
       margin-bottom: 8px;
     }
-    
+
     #posts {
       div.post {
         border-bottom: 1px solid @grey;
         padding: 4px;
-        
+
         h3 {
           font-size: 16px;
         }
-        
+
         h4 {
-          font-size: 14px;
+          font-size: 12px;
           color: @grey;
         }
-        
+
         p {
           margin-top: 8px;
         }
