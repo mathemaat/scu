@@ -22,14 +22,14 @@ class Handler_MenuItem extends Handler
 
   public function __construct($arguments) {
     parent::__construct($arguments);
-    
+
     self::loadProperties($arguments[0]);
-    
+
     self::$tabs        = self::getTabs();
     self::$defaultTab  = self::getDefaultTab();
-    
+
     self::setGETParams();
-    
+
     self::$selectedTab = self::getSelectedTab();
     self::$posts       = self::getPosts();
   }
@@ -101,12 +101,12 @@ class Handler_MenuItem extends Handler
 
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
-  
+
   protected static function getSelectedTab() {
     $dbHandler = Application::getInstance()->getDBHandler();
 
     $query =
-      'SELECT tab_id, tab_description, tab_token ' .
+      'SELECT tab_id, tab_description, tab_token, tab_has_only_one_post ' .
       'FROM tbltab ' .
       'WHERE tab_token = ?';
     $params = array(self::$GETParams['tab']);
@@ -115,7 +115,7 @@ class Handler_MenuItem extends Handler
 
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
-  
+
   protected static function getPosts() {
     $dbHandler = Application::getInstance()->getDBHandler();
 
@@ -124,40 +124,54 @@ class Handler_MenuItem extends Handler
       'FROM tblpost ' .
       'WHERE pst_mni_id = ? ';
     $params = array(self::$properties['mni_id']);
-    
+
     if (self::$properties['mni_has_tabs']) {
       $query .= 'AND pst_tab_id = ?';
       $params[] = self::$selectedTab['tab_id'];
     }
-    
+
     if (self::$GETParams['season']) {
       $query .= 'AND pst_sea_id = ?';
       $params[] = self::$GETParams['season'];
     }
-    
+
     $statement = $dbHandler->prepare($query);
     $statement->execute($params);
 
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
-  
+
   public function handleRequest() {
-    if (self::$properties['mni_has_tabs'])
-      $template = Util::getTemplate('post-history');
-    else
+    if (!self::$properties['mni_has_tabs']) {
       $template = Util::getTemplate('post-history-no-tabs');
 
-    $variables = array(
-      'tabs'  => $this->getTabsHtml(),
-      'title' => self::$properties['mni_has_tabs'] ? self::$selectedTab['tab_description'] : self::$properties['mni_description'],
-      'posts' => $this->getPostsHtml()
-    );
+      $variables['title'] = self::$properties['mni_description'];
+      $variables['posts'] = $this->getPostsHtml();
+    }
+    else {
+      $variables['tabs']  = $this->getTabsHtml();
+      $variables['title'] = self::$selectedTab['tab_description'];
+
+      if (self::$selectedTab['tab_has_only_one_post']) {
+        $template = Util::getTemplate('post');
+
+        if (self::$selectedTab['tab_token'] == 'agenda')
+          $variables['post'] = $this->getAgenda();
+        else
+          $variables['post'] = $this->getPostHtml();
+      }
+      else {
+        $template = Util::getTemplate('post-history');
+
+        $variables['posts'] = $this->getPostsHtml();
+      }
+    }
 
     $body = $this->getSeasonWindow() . Util::formatString($template, $variables);
 
     echo $this->formatTemplate(array('body' => $body));
   }
-  
+
   public function getTabsHtml() {
     $items = array();
     foreach(self::$tabs as $token => $description) {
@@ -176,28 +190,76 @@ class Handler_MenuItem extends Handler
 
     return '<ul>' . implode('', $items) . '</ul>';
   }
-  
+
   protected function getPostsHtml() {
     if (count(self::$posts) == 0)
       return 'Er zijn nog geen artikelen geschreven voor deze pagina.';
-    
+
     $template = Util::getTemplate('post-cell');
-    
+
     $items = array();
     foreach(self::$posts as $post) {
       $variables = array(
         'post-id'       => $post['pst_id'],
         'title'         => $post['pst_title'],
         'creation-info' => date('d-m-Y', strtotime($post['pst_date'])),
-        'contents'      => substr($post['pst_contents'], 0, 200)
+        'contents'      => substr($post['pst_contents'], 0, 360)
       );
-      
+
       $items[] = Util::formatString($template, $variables);
     }
-    
+
     return implode('', $items);
   }
-  
+
+  protected function getPostHtml() {
+    return 'Post';
+  }
+
+  protected function getAgenda() {
+    $dbHandler = Application::getInstance()->getDBHandler();
+
+    $query =
+      'SELECT agi_id, agi_datum, agi_tijd, agi_omschrijving ' .
+      'FROM tblagendaitem ' .
+      'WHERE agi_sea_id = ? ' .
+      'ORDER BY agi_datum';
+    $params = array($this->selectedSeason['sea_id']);
+
+    $statement = $dbHandler->prepare($query);
+    $statement->execute($params);
+
+    $qrAgendaItems = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    $rows = array();
+
+    $rows[] =
+      '<tr>' .
+        '<th>Dag</th>' .
+        '<th>Datum</th>' .
+        '<th>Tijd</th>' .
+        '<th>Omschrijving</th>' .
+      '</tr>';
+
+    foreach($qrAgendaItems as $qrAgendaItem) {
+      $rows[] = sprintf(
+        '<tr>' .
+          '<td>%s</td>' .
+          '<td>%d %s</td>' .
+          '<td>%s</td>' .
+          '<td>%s</td>' .
+        '</tr>',
+        Util::$dagen[date('N', strtotime($qrAgendaItem['agi_datum']))],
+        date('j', strtotime($qrAgendaItem['agi_datum'])),
+        strtolower(Util::$maanden[date('n', strtotime($qrAgendaItem['agi_datum']))]),
+        date('H:i', strtotime($qrAgendaItem['agi_tijd'])),
+        $qrAgendaItem['agi_omschrijving']
+      );
+    }
+
+    return '<table>' . "\n" . implode("\n", $rows) . "\n" . '</table>' . "\n";
+  }
+
   // create a link part containing the $_GET parameters based on $params
   protected function getGETParamsLinkPart($params) {
     $parts = array();

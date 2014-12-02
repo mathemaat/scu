@@ -4,7 +4,14 @@
 
 // palette: http://www.color-hex.com/color/804020
 @brown: #804020;
-@brown-light: #8c5336;
+@brown-dark: #402010;
+@brown-light: #99664c;
+@brown-bright: #bf9f8f;
+
+@green: #206020;
+@green-dark: #103010;
+@green-light: #4c7f4c;
+@green-bright: #8faf8f;
 
 @text: #402010;
 
@@ -225,5 +232,35 @@ div.centered {
         }
       }
     }
+  }
+}
+
+table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  
+  tr {
+    th, td {
+      padding: 2px 4px;
+    }
+    
+    th {
+      background: @green;
+      color: @white;
+      
+      border: 1px solid @green-dark;
+      
+      text-align: left;
+      font-weight: bold;
+    }
+    
+    td {
+      vertical-align: top;
+      border: 1px solid @green;
+    }
+  }
+  
+  tr:nth-child(2n+1) td {
+    background: @green-bright;
   }
 }

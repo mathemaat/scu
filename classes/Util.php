@@ -2,6 +2,9 @@
 
 class Util
 {
+  public static $dagen   = array(1 => 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo');
+  public static $maanden = array(1 => 'Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec');
+  
   public static function debug($var) {
     echo '<pre>' . htmlspecialchars(print_r($var, true)) . '</pre>';
   }

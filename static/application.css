@@ -86,7 +86,7 @@ div.centered {
 }
 #menu-bar #menu li a.active,
 #menu-bar #menu li a:hover {
-  background: #8c5336;
+  background: #99664c;
 }
 #body {
   min-height: 400px;
@@ -136,7 +136,7 @@ div.centered {
   color: #ffffff;
 }
 #season-window .season-bar .season-navigation:hover {
-  background: #8c5336;
+  background: #99664c;
   cursor: pointer;
 }
 #season-window .season-bar .season-navigation a:hover {
@@ -177,4 +177,26 @@ div.centered {
 }
 #post-history #main #posts div.post p {
   margin-top: 8px;
+}
+table {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+table tr th,
+table tr td {
+  padding: 2px 4px;
+}
+table tr th {
+  background: #206020;
+  color: #ffffff;
+  border: 1px solid #103010;
+  text-align: left;
+  font-weight: bold;
+}
+table tr td {
+  vertical-align: top;
+  border: 1px solid #206020;
+}
+table tr:nth-child(2n+1) td {
+  background: #8faf8f;
 }
