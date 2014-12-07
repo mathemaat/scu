@@ -114,9 +114,9 @@ div.centered {
 
 #body {
   min-height: 400px;
-  
+
   color: @text;
-  
+
   padding-bottom: 12px;
 }
 
@@ -177,7 +177,7 @@ div.centered {
       background: @brown-light;
       cursor: pointer;
     }
-    
+
     .season-navigation a:hover {
       text-decoration: none;
     }
@@ -190,7 +190,7 @@ div.centered {
   }
 }
 
-#post-history {
+#page {
   margin-top: 12px;
 
   #tabs {
@@ -213,7 +213,7 @@ div.centered {
       margin-bottom: 8px;
     }
 
-    #posts {
+    #contents {
       div.post {
         border-bottom: 1px solid @grey;
         padding: 4px;
@@ -235,31 +235,35 @@ div.centered {
   }
 }
 
+#page.post #main #contents{
+  white-space: pre-line;
+}
+
 table {
   table-layout: fixed;
   border-collapse: collapse;
-  
+
   tr {
     th, td {
       padding: 2px 4px;
     }
-    
+
     th {
       background: @green;
       color: @white;
-      
+
       border: 1px solid @green-dark;
-      
+
       text-align: left;
       font-weight: bold;
     }
-    
+
     td {
       vertical-align: top;
       border: 1px solid @green;
     }
   }
-  
+
   tr:nth-child(2n+1) td {
     background: @green-bright;
   }

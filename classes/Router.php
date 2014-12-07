@@ -25,10 +25,10 @@ class Router
 
     if (count($components) >= 1 && strlen($components[0]) >= 1) {
       $handler = Util::toCamelCase($components[0]);
-      
+
       // als de opgevraagde pagina een menuitem betreft, bewaar dan nog even welke dit was
       if (self::isMenuItem($handler))
-        $handler = 'MenuItem';
+        $handler = 'PostList';
       else
         array_shift($components);
     }
@@ -36,7 +36,7 @@ class Router
       self::$requestUri = 'index';
       $handler          = 'Index';
     }
-    
+
     $className = 'Handler_' . $handler;
 
     // check whether class exists
@@ -51,7 +51,7 @@ class Router
     self::$handler = new $className($components);
     self::$handler->handleRequest();
   }
-  
+
   protected static function isMenuItem($token) {
     $dbHandler = Application::getInstance()->getDBHandler();
 

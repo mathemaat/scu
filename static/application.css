@@ -146,37 +146,40 @@ div.centered {
   overflow: hidden;
   padding: 0px 10px;
 }
-#post-history {
+#page {
   margin-top: 12px;
 }
-#post-history #tabs {
+#page #tabs {
   float: left;
   width: 180px;
   padding: 0px 10px;
   font-size: 16px;
   text-transform: uppercase;
 }
-#post-history #main {
+#page #main {
   overflow: hidden;
   min-height: 320px;
 }
-#post-history #main h1 {
+#page #main h1 {
   font-size: 18px;
   margin-bottom: 8px;
 }
-#post-history #main #posts div.post {
+#page #main #contents div.post {
   border-bottom: 1px solid #404040;
   padding: 4px;
 }
-#post-history #main #posts div.post h3 {
+#page #main #contents div.post h3 {
   font-size: 16px;
 }
-#post-history #main #posts div.post h4 {
+#page #main #contents div.post h4 {
   font-size: 12px;
   color: #404040;
 }
-#post-history #main #posts div.post p {
+#page #main #contents div.post p {
   margin-top: 8px;
+}
+#page.post #main #contents {
+  white-space: pre-line;
 }
 table {
   table-layout: fixed;
