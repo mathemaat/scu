@@ -1,6 +1,6 @@
 <?php
 
-class Handler_Page extends Handler
+class Handler_Static extends Handler
 {
   const PAGEDIR = 'static/pages';
 

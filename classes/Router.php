@@ -68,7 +68,7 @@ class Router
 
   public static function notFound() {
     header('HTTP/1.1 404 Not Found');
-    self::$handler = new Handler_Page(array('404'));
+    self::$handler = new Handler_Static(array('404'));
     self::$handler->handleRequest();
     die();
   }
@@ -76,7 +76,7 @@ class Router
   public static function error($title = null, $message = null)
   {
     header('HTTP/1.1 500 Internal Server Error');
-    self::$handler = new Handler_Page(array('500'));
+    self::$handler = new Handler_Static(array('500'));
     self::$handler->setTemplateVars(array('errorTitle' => htmlspecialchars($title), 'errorMessage' => htmlspecialchars($message)));
     self::$handler->handleRequest();
     die();
