@@ -57,9 +57,9 @@ class Handler_Post extends Handler_Page
   }
 
   public function handleRequest() {
-    $variables['class'] = 'post';
-    $variables['tabs']  = $this->getTabsHtml();
-    $variables['title'] = self::$post['pst_title'];
+    $variables['class']    = 'post';
+    $variables['tabs']     = $this->getTabsHtml();
+    $variables['title']    = self::$selectedTab['tab_description'];
     $variables['contents'] = $this->getPostHtml();
 
     $template = Util::getTemplate('page');
@@ -70,6 +70,16 @@ class Handler_Post extends Handler_Page
   }
 
   protected function getPostHtml() {
-    return self::$post['pst_contents'];
+    $template = Util::getTemplate('post');
+
+    $variables = array(
+      'docroot'   => APPLICATION_DOCROOT,
+      'post-id'   => self::$post['pst_id'],
+      'title'     => self::$post['pst_title'],
+      'meta-data' => date('d-m-Y', strtotime(self::$post['pst_date'])),
+      'contents'  => self::$post['pst_contents']
+    );
+
+    return Util::formatString($template, $variables);
   }
 }

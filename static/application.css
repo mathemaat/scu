@@ -167,10 +167,6 @@ div.centered {
   font-size: 18px;
   margin-bottom: 8px;
 }
-#page #main #contents div.post {
-  border-bottom: 1px solid #404040;
-  padding: 4px;
-}
 #page #main #contents div.post h3 {
   font-size: 16px;
 }
@@ -181,7 +177,11 @@ div.centered {
 #page #main #contents div.post p {
   margin-top: 8px;
 }
-#page.post #main #contents {
+#page #main #contents.post-list div.post {
+  border-bottom: 1px solid #404040;
+  padding: 4px;
+}
+#page #main #contents.post div.post p {
   white-space: pre-line;
 }
 table {
