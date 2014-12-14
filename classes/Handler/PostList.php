@@ -93,10 +93,11 @@ class Handler_PostList extends Handler_Page
     $items = array();
     foreach(self::$posts as $post) {
       $variables = array(
-        'post-id'       => $post['pst_id'],
-        'title'         => $post['pst_title'],
-        'creation-info' => date('d-m-Y', strtotime($post['pst_date'])),
-        'contents'      => substr($post['pst_contents'], 0, 360)
+        'docroot'   => APPLICATION_DOCROOT,
+        'post-id'   => $post['pst_id'],
+        'title'     => $post['pst_title'],
+        'meta-data' => date('d-m-Y', strtotime($post['pst_date'])),
+        'contents'  => Util::shortenPost($post['pst_contents'])
       );
 
       $items[] = Util::formatString($template, $variables);

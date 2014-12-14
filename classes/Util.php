@@ -4,7 +4,7 @@ class Util
 {
   public static $dagen   = array(1 => 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo');
   public static $maanden = array(1 => 'Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec');
-  
+
   public static function debug($var) {
     echo '<pre>' . htmlspecialchars(print_r($var, true)) . '</pre>';
   }
@@ -19,6 +19,15 @@ class Util
     $string = str_replace(' ', '', $string);
 
     return $string;
+  }
+
+  public static function shortenPost($text) {
+    $length = strlen($text);
+
+    if ($length <= POST_LIST_POST_LENGTH)
+      return $text;
+
+    return trim(substr($text, 0, POST_LIST_POST_LENGTH - 4)) . ' ...';
   }
 
   public static function getTemplate($template) {

@@ -37,9 +37,6 @@ body {
 ul {
   list-style: none;
 }
-a:hover {
-  text-decoration: underline;
-}
 div.centered {
   display: block;
   margin: 0px auto;
@@ -92,6 +89,12 @@ div.centered {
   min-height: 400px;
   color: #402010;
   padding-bottom: 12px;
+}
+#body a {
+  color: #402010;
+}
+#body a:hover {
+  text-decoration: underline;
 }
 #footer {
   background: #804020;
