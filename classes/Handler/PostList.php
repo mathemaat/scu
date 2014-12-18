@@ -68,13 +68,15 @@ class Handler_PostList extends Handler_Page
       'WHERE pst_mni_id = ? ';
     $params = array(self::$menuItem['mni_id']);
 
-    $query .= 'AND pst_tab_id = ?';
+    $query .= 'AND pst_tab_id = ? ';
     $params[] = self::$selectedTab['tab_id'];
 
     if (self::$GETParams['season']) {
-      $query .= 'AND pst_sea_id = ?';
+      $query .= 'AND pst_sea_id = ? ';
       $params[] = self::$GETParams['season'];
     }
+
+    $query .= 'ORDER BY pst_date DESC';
 
     $statement = $dbHandler->prepare($query);
     $statement->execute($params);
