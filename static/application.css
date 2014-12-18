@@ -28,6 +28,10 @@ h1,
 h3 {
   font-weight: bold;
 }
+h1 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
 h4 {
   font-style: italic;
 }
@@ -163,10 +167,6 @@ div.centered {
   overflow: hidden;
   min-height: 320px;
 }
-#page #main h1 {
-  font-size: 18px;
-  margin-bottom: 8px;
-}
 #page #main #contents div.post h3 {
   font-size: 16px;
 }
@@ -183,6 +183,16 @@ div.centered {
 }
 #page #main #contents.post div.post p {
   white-space: pre-line;
+}
+#page #widgets {
+  float: right;
+  width: 320px;
+}
+#page #widgets div.widget {
+  padding: 8px;
+}
+#page #widgets div.widget div.widget-contents p {
+  margin-bottom: 4px;
 }
 table {
   table-layout: fixed;
