@@ -7,8 +7,6 @@ class Handler_PostList extends Handler_Page
 
   public function __construct($arguments) {
     parent::__construct($arguments);
-
-    self::$posts = self::getPosts();
   }
 
   public function getMenuItem() {
@@ -44,6 +42,23 @@ class Handler_PostList extends Handler_Page
     return $GETParams;
   }
 
+  public function handleRequest() {
+    $variables['class'] = 'post-list';
+    $variables['tabs']  = $this->getTabsHtml();
+    $variables['title'] = self::$selectedTab['tab_description'];
+
+    if (self::$selectedTab['tab_token'] == 'agenda')
+      $variables['contents'] = $this->getAgenda();
+    else
+      $variables['contents'] = $this->getPostsHtml();
+
+    $template = Util::getTemplate('page');
+
+    $body = $this->getSeasonWindow() . Util::formatString($template, $variables);
+
+    echo $this->formatTemplate(array('body' => $body));
+  }
+
   protected static function getPosts() {
     $dbHandler = Application::getInstance()->getDBHandler();
 
@@ -67,31 +82,15 @@ class Handler_PostList extends Handler_Page
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function handleRequest() {
-    $variables['class'] = 'post-list';
-    $variables['tabs']  = $this->getTabsHtml();
-    $variables['title'] = self::$selectedTab['tab_description'];
-
-    if (self::$selectedTab['tab_token'] == 'agenda')
-      $variables['contents'] = $this->getAgenda();
-    else
-      $variables['contents'] = $this->getPostsHtml();
-
-    $template = Util::getTemplate('page');
-
-    $body = $this->getSeasonWindow() . Util::formatString($template, $variables);
-
-    echo $this->formatTemplate(array('body' => $body));
-  }
-
   protected function getPostsHtml() {
-    if (count(self::$posts) == 0)
+    $posts = self::getPosts();
+    if (count($posts) == 0)
       return 'Er zijn nog geen artikelen geschreven voor deze pagina.';
 
     $template = Util::getTemplate('post-cell');
 
     $items = array();
-    foreach(self::$posts as $post) {
+    foreach($posts as $post) {
       $variables = array(
         'docroot'   => APPLICATION_DOCROOT,
         'post-id'   => $post['pst_id'],

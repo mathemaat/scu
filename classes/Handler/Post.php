@@ -7,8 +7,6 @@ class Handler_Post extends Handler_Page
 
   public function __construct($arguments) {
     parent::__construct($arguments);
-
-    self::$post = $this->getPost();
   }
 
   public function getMenuItem() {
@@ -70,14 +68,18 @@ class Handler_Post extends Handler_Page
   }
 
   protected function getPostHtml() {
+    $post = $this->getPost();
+    if (!$post)
+      Router::notFound();
+    
     $template = Util::getTemplate('post');
 
     $variables = array(
       'docroot'   => APPLICATION_DOCROOT,
-      'post-id'   => self::$post['pst_id'],
-      'title'     => self::$post['pst_title'],
-      'meta-data' => date('d-m-Y', strtotime(self::$post['pst_date'])),
-      'contents'  => self::$post['pst_contents']
+      'post-id'   => $post['pst_id'],
+      'title'     => $post['pst_title'],
+      'meta-data' => date('d-m-Y', strtotime($post['pst_date'])),
+      'contents'  => $post['pst_contents']
     );
 
     return Util::formatString($template, $variables);
