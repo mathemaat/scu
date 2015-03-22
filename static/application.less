@@ -232,9 +232,15 @@ div.centered {
           font-size: 12px;
           color: @grey;
         }
-        
-        p {
+
+        div.post-contents {
           margin-top: 8px;
+          white-space: pre-line;
+
+          // matches chesstempo divs
+          div {
+            white-space: normal;
+          }
         }
       }
     }
@@ -243,19 +249,19 @@ div.centered {
         border-bottom: 1px solid @grey;
         padding: 4px;
     }
-    
+
     #contents.post div.post p {
       white-space: pre-line;
     }
   }
-  
+
   #widgets {
     float: right;
     width: 320px;
-    
+
     div.widget {
       padding: 8px;
-      
+
       div.widget-contents p {
         margin-bottom: 4px;
       }
@@ -265,7 +271,7 @@ div.centered {
 
 #upload {
   margin-top: 12px;
-  
+
   p {
     margin-bottom: 8px;
   }
@@ -306,7 +312,7 @@ form {
     border: 0;
     margin: 0;
     padding: 0;
-    
+
     label, input, select, span {
       float: left;
       display: block;
@@ -343,11 +349,11 @@ form.upload {
     label {
       width: @label-width;
     }
-    
+
     input.text {
       width: @input-width;
     }
-    
+
     div.submit-buttons {
       margin-left: @label-width + 2 * (@form-margin + @form-padding);
     }
