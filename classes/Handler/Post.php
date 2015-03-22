@@ -5,10 +5,6 @@ class Handler_Post extends Handler_Page
   // de artikelen van het geselecteerde menuitem en tabblad
   protected static $post;
 
-  public function __construct($arguments) {
-    parent::__construct($arguments);
-  }
-
   public function getMenuItem() {
     $dbHandler = Application::getInstance()->getDBHandler();
 
