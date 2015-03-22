@@ -19,7 +19,7 @@ abstract class Handler
   public abstract function handleRequest();
 
   public function underConstruction() {
-    echo $this->formatTemplate(array('body' => I18N::translate('Under_construction')));
+    echo $this->formatTemplate(array('body' => 'Aan deze pagina wordt nog gewerkt.'));
     die();
   }
 
