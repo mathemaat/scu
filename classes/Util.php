@@ -132,4 +132,42 @@ class Util
 
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
+
+  public static function preparePost($post) {
+    $count = preg_match_all('/\[pgn-\d{1,}\]/i', $post, $matches);
+
+    if ($count === false || $count == 0)
+      return $post;
+
+    foreach($matches[0] as $match) {
+      $pgnId   = substr($match, 5, strlen($match) - 6);
+      $pgnFile = sprintf('%s/static/pgn/%04d.pgn', APPLICATION_PATH, $pgnId);
+
+      if (!file_exists($pgnFile)) {
+        $dbHandler = Application::getInstance()->getDBHandler();
+
+        $query = "SELECT pgn_contents FROM tblpgn WHERE pgn_id = ?";
+        $params = array($pgnId);
+
+        $statement = $dbHandler->prepare($query);
+        $statement->execute($params);
+        $contents = $statement->fetch(PDO::FETCH_COLUMN);
+
+        $success = file_put_contents($pgnFile, $contents);
+        if (!$success)
+          continue;
+      }
+
+      $viewer = sprintf(
+        '<div id="pgn%1$d-container"></div>' .
+        '<div id="pgn%1$d-moves"></div>' .
+        '<script>new PgnViewer({ boardName: "pgn%1$d", pgnFile: "%2$s/static/pgn/%1$d.pgn", pieceSet: "case"});</script>',
+        $pgnId, APPLICATION_DOCROOT
+      );
+
+      $post = str_replace($match, $viewer, $post);
+    }
+
+    return $post;
+  }
 }

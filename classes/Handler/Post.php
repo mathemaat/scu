@@ -75,7 +75,7 @@ class Handler_Post extends Handler_Page
       'post-id'   => $post['pst_id'],
       'title'     => $post['pst_title'],
       'meta-data' => date('d-m-Y', strtotime($post['pst_date'])),
-      'contents'  => $post['pst_contents']
+      'contents'  => Util::preparePost($post['pst_contents'])
     );
 
     return Util::formatString($template, $variables);
