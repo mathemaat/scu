@@ -178,6 +178,9 @@ div.centered {
   margin-top: 8px;
   white-space: pre-line;
 }
+#page #main #contents div.post div.post-contents a {
+  font-weight: bold;
+}
 #page #main #contents div.post div.post-contents div {
   white-space: normal;
 }
