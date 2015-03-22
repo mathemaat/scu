@@ -161,7 +161,7 @@ class Util
       $viewer = sprintf(
         '<div id="pgn%1$d-container"></div>' .
         '<div id="pgn%1$d-moves"></div>' .
-        '<script>new PgnViewer({ boardName: "pgn%1$d", pgnFile: "%2$s/static/pgn/%1$d.pgn", pieceSet: "case"});</script>',
+        '<script>new PgnViewer({ boardName: "pgn%1$d", pgnFile: "%2$s/static/pgn/%1$04d.pgn", pieceSet: "case"});</script>',
         $pgnId, APPLICATION_DOCROOT
       );
 
