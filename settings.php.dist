@@ -1,8 +1,10 @@
 <?php
 
-define('PDO_HOST',     'localhost');
-define('PDO_DATABASE', 'scu');
-define('PDO_USER',     'root');
-define('PDO_PASSWORD', '');
+define('MYSQL_HOST',     'localhost');
+define('MYSQL_DATABASE', 'scu');
+define('MYSQL_USERNAME', 'root');
+define('MYSQL_PASSWORD', '');
+
+define('POST_LIST_POST_LENGTH', 360);
 
 define('APPLICATION_TITLE', 'Schaakclub Utrecht');
