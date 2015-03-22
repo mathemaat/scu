@@ -201,6 +201,9 @@ div.centered {
 #page #widgets div.widget div.widget-contents p {
   margin-bottom: 4px;
 }
+#page #widgets div.widget a {
+  font-weight: bold;
+}
 #upload {
   margin-top: 12px;
 }
