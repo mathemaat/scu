@@ -194,6 +194,12 @@ div.centered {
 #page #widgets div.widget div.widget-contents p {
   margin-bottom: 4px;
 }
+#upload {
+  margin-top: 12px;
+}
+#upload p {
+  margin-bottom: 8px;
+}
 table {
   table-layout: fixed;
   border-collapse: collapse;
@@ -215,4 +221,47 @@ table tr td {
 }
 table tr:nth-child(2n+1) td {
   background: #8faf8f;
+}
+form fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+form fieldset label,
+form fieldset input,
+form fieldset select,
+form fieldset span {
+  float: left;
+  display: block;
+  margin: 2px;
+  padding: 2px;
+}
+form fieldset label {
+  clear: left;
+}
+form fieldset input,
+form fieldset textarea {
+  border: 1px solid #bdbdbd;
+}
+form fieldset input.submit {
+  border: 0px;
+  background-color: #4a4646;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+form fieldset input.submit:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+form fieldset div.submit-buttons {
+  clear: left;
+}
+form.upload fieldset label {
+  width: 200px;
+}
+form.upload fieldset input.text {
+  width: 400px;
+}
+form.upload fieldset div.submit-buttons {
+  margin-left: 208px;
 }

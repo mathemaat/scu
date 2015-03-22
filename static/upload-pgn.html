@@ -1,0 +1,16 @@
+<div id="upload" class="centered">
+  <h1>Upload PGN</h1>
+  <p>
+    Copy/paste het complete PGN-bestand in het tekstvak.
+  </p>
+  <form id="upload-pgn" class="upload" action="%(docroot)s/upload/pgn" method="post">
+      <fieldset>
+          <label for="contents">PGN</label>
+          <textarea id="contents" name="contents" rows="20" cols="60"></textarea>
+          <div class="submit-buttons">
+              <input type="submit" class="submit" name="save" value="Opslaan" />
+              <input type="submit" class="submit" name="cancel" value="Annuleren" />
+          </div>
+      </fieldset>
+  </form>
+</div>

@@ -15,6 +15,11 @@
 
 @text: #402010;
 
+@form-margin:  2px;
+@form-padding: 2px;
+@input-border: 1px;
+@border-color: #bdbdbd;
+
 body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, table, tr, th, td {
   font-weight: normal;
   margin: 0px;
@@ -258,6 +263,14 @@ div.centered {
   }
 }
 
+#upload {
+  margin-top: 12px;
+  
+  p {
+    margin-bottom: 8px;
+  }
+}
+
 table {
   table-layout: fixed;
   border-collapse: collapse;
@@ -285,5 +298,58 @@ table {
 
   tr:nth-child(2n+1) td {
     background: @green-bright;
+  }
+}
+
+form {
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    
+    label, input, select, span {
+      float: left;
+      display: block;
+      margin: @form-margin;
+      padding: @form-padding;
+    }
+    label {
+      clear: left;
+    }
+    input, textarea {
+      border: @input-border solid @border-color;
+    }
+    input.submit {
+      border: 0px;
+      background-color: #4a4646;
+      color: @white;
+      text-transform: uppercase;
+    }
+    input.submit:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    div.submit-buttons {
+      clear: left;
+    }
+  }
+}
+
+form.upload {
+  @label-width: 200px;
+  @input-width: 400px;
+
+  fieldset {
+    label {
+      width: @label-width;
+    }
+    
+    input.text {
+      width: @input-width;
+    }
+    
+    div.submit-buttons {
+      margin-left: @label-width + 2 * (@form-margin + @form-padding);
+    }
   }
 }
