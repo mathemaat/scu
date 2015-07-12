@@ -1,0 +1,19 @@
+<div id="system" class="centered">
+  <h1>PGN-bestand zoeken</h1>
+  <p>
+    Gebruik het formulier om te zoeken naar PGN-bestanden.
+  </p>
+  <form id="pgn-search" class="pgn search" action="%(docroot)s/pgn/search" method="get">
+      <fieldset>
+          <label for="player">Speler</label>
+          <input id="player" name="player" type="text" value="%(player)s">
+          <div class="submit-buttons">
+              <input type="submit" class="submit" value="Zoeken" />
+              <input type="submit" class="submit" value="Annuleren" />
+          </div>
+      </fieldset>
+  </form>
+  <div id="result">
+    %(result)s
+  </div>
+</div>

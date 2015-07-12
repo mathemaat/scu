@@ -66,6 +66,12 @@ class Router
     return $statement->fetch(PDO::FETCH_COLUMN);
   }
 
+  public static function allowUpload() {
+    // to do: controleren of een gebruiker is ingelogd ipv een hardcoded IP te gebruiken
+    $whitelist = array('213.10.71.43');
+    return $_SERVER['HTTP_HOST'] == 'localhost' || in_array(Util::getIPAddress(), $whitelist);
+  }
+
   public static function notFound() {
     header('HTTP/1.1 404 Not Found');
     self::$handler = new Handler_Static(array('404'));

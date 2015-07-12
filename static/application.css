@@ -204,10 +204,12 @@ div.centered {
 #page #widgets div.widget a {
   font-weight: bold;
 }
-#upload {
+#upload,
+#search {
   margin-top: 12px;
 }
-#upload p {
+#upload p,
+#search p {
   margin-bottom: 8px;
 }
 table {
@@ -266,12 +268,12 @@ form fieldset input.submit:hover {
 form fieldset div.submit-buttons {
   clear: left;
 }
-form.upload fieldset label {
+form.pgn fieldset label {
   width: 200px;
 }
-form.upload fieldset input.text {
+form.pgn fieldset input.text {
   width: 400px;
 }
-form.upload fieldset div.submit-buttons {
+form.pgn fieldset div.submit-buttons {
   margin-left: 208px;
 }
