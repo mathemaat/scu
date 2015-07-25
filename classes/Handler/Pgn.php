@@ -185,8 +185,8 @@ class Handler_Pgn extends Handler_Resource
     {
       $success = file_put_contents($pgnFile, $pgn['pgn_contents']);
       if (!$success)
-        throw new Exception('Unable to view PGN');
-  }
+        throw new Exception('Unable to save PGN-file to disk');
+    }
 
     $variables = array(
       'docroot' => APPLICATION_DOCROOT,

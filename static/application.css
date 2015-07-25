@@ -214,16 +214,20 @@ div.centered {
 #system div.search-result {
   margin-bottom: 12px;
 }
+#system div.view {
+  margin-bottom: 12px;
+}
 #system div.view div.row div.label {
   float: left;
   clear: left;
   font-weight: bold;
-  width: 100px;
+  width: 120px;
 }
 #system div.view div.row div.value {
   float: left;
 }
-#pgn-diagram {
+#system #pgn-diagram,
+#system img {
   margin-bottom: 12px;
 }
 table {

@@ -1,0 +1,22 @@
+<div id="system" class="centered">
+  <h1>Afbeelding zoeken</h1>
+  <p>
+    Gebruik het formulier om te zoeken naar afbeeldingen.
+  </p>
+  <form id="image-search" class="image search-form" action="%(docroot)s/image/search" method="get">
+      <fieldset>
+          <label for="filename">Bestandsnaam</label>
+          <input id="filename" name="filename" type="text" value="%(filename)s">
+          <div class="submit-buttons">
+              <input type="submit" class="submit" value="Zoeken" />
+              <input type="submit" class="submit" value="Annuleren" />
+          </div>
+      </fieldset>
+  </form>
+  <div class="search-result">
+    %(result)s
+  </div>
+  <div class="buttons">
+    <a href="%(docroot)s/image/upload">Afbeelding uploaden</a>
+  </div>
+</div>

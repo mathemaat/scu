@@ -1,0 +1,21 @@
+<div id="system" class="centered">
+  <h1>Afbeelding bekijken</h1>
+  <p>
+    Bekijk de details van de afbeelding.
+  </p>
+  <div id="image-view" class="afbeelding view">
+    <div class="row">
+      <div class="label">Bestandsnaam</div>
+      <div class="value">%(filename)s</div>
+    </div>
+    <div class="row">
+      <div class="label">Type</div>
+      <div class="value">%(type)s</div>
+    </div>
+    <br class="clear" />
+  </div>
+  <img src="%(docroot)s/static/img/%(uploaded-filename)s" alt="%(filename)s" />
+  <div class="buttons">
+    <a href="%(docroot)s/image/search">Terug naar lijst</a>
+  </div>
+</div>

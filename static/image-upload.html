@@ -1,0 +1,16 @@
+<div id="system" class="centered">
+  <h1>Afbeelding uploaden</h1>
+  <p>
+    Selecteer een afbeelding van schijf.
+  </p>
+  <form id="image-upload" class="image upload" action="%(docroot)s/image/upload" enctype="multipart/form-data" method="post">
+      <fieldset>
+          <label for="image">Afbeelding</label>
+          <input type="file" name="image" />
+          <div class="submit-buttons">
+              <input type="submit" class="submit" name="save" value="Opslaan" />
+              <input type="submit" class="submit" name="cancel" value="Annuleren" />
+          </div>
+      </fieldset>
+  </form>
+</div>
