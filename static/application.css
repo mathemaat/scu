@@ -204,13 +204,27 @@ div.centered {
 #page #widgets div.widget a {
   font-weight: bold;
 }
-#upload,
-#search {
+#system {
   margin-top: 12px;
 }
-#upload p,
-#search p {
+#system p {
   margin-bottom: 8px;
+}
+#system form.search-form,
+#system div.search-result {
+  margin-bottom: 12px;
+}
+#system div.view div.row div.label {
+  float: left;
+  clear: left;
+  font-weight: bold;
+  width: 100px;
+}
+#system div.view div.row div.value {
+  float: left;
+}
+#pgn-diagram {
+  margin-bottom: 12px;
 }
 table {
   table-layout: fixed;

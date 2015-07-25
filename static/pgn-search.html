@@ -3,7 +3,7 @@
   <p>
     Gebruik het formulier om te zoeken naar PGN-bestanden.
   </p>
-  <form id="pgn-search" class="pgn search" action="%(docroot)s/pgn/search" method="get">
+  <form id="pgn-search" class="pgn search-form" action="%(docroot)s/pgn/search" method="get">
       <fieldset>
           <label for="player">Speler</label>
           <input id="player" name="player" type="text" value="%(player)s">
@@ -13,7 +13,10 @@
           </div>
       </fieldset>
   </form>
-  <div id="result">
+  <div class="search-result">
     %(result)s
+  </div>
+  <div class="buttons">
+    <a href="%(docroot)s/pgn/upload">PGN-bestand uploaden</a>
   </div>
 </div>

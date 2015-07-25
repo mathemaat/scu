@@ -1,0 +1,33 @@
+<div id="system" class="centered">
+  <h1>PGN-bestand bekijken</h1>
+  <p>
+    Bekijk de details van het PGN-bestand.
+  </p>
+  <div id="pgn-view" class="pgn view">
+    <div class="row">
+      <div class="label">Wit</div>
+      <div class="value">%(white)s</div>
+    </div>
+    <div class="row">
+      <div class="label">Zwart</div>
+      <div class="value">%(black)s</div>
+    </div>
+    <div class="row">
+      <div class="label">Datum</div>
+      <div class="value">%(date)s</div>
+    </div>
+    <div class="row">
+      <div class="label">Resultaat</div>
+      <div class="value">%(result)s</div>
+    </div>
+    <br class="clear" />
+  </div>
+  <div id="pgn-diagram">
+    <div id="pgn-container"></div>
+    <div id="pgn-moves"></div>
+    <script>new PgnViewer({ boardName: "pgn", pgnFile: "%(docroot)s/static/pgn/%(pgn-id)s.pgn", pieceSet: "case"});</script>
+  </div>
+  <div class="buttons">
+    <a href="%(docroot)s/pgn/search">Terug naar lijst</a>
+  </div>
+</div>

@@ -1,21 +1,7 @@
 <?php
 
-class Handler_Pgn extends Handler
+class Handler_Pgn extends Handler_Resource
 {
-  public function handleRequest() {
-    if (!Router::allowUpload())
-      Router::notFound();
-
-    if (count($this->arguments) == 0)
-      Router::notFound();
-
-    $function = $this->arguments[0];
-    if (in_array($function, array('search', 'view', 'upload')))
-      call_user_func(array(__CLASS__, $function));
-    else
-      Router::notFound();
-  }
-
   public function search() {
     $player  = array_key_exists('player',  $_GET) ? $_GET['player']  : null;
     $page    = array_key_exists('page',    $_GET) ? $_GET['page']    : 1;
@@ -83,14 +69,23 @@ class Handler_Pgn extends Handler
         $dbHandler = Application::getInstance()->getDBHandler();
 
         $pgnParams = self::parsePgnParams($contents);
-
-        $query = "INSERT INTO tblpgn (pgn_contents, pgn_date, pgn_white, pgn_black, pgn_res_id) VALUES (?, ?, ?, ?, ?)";
-        $params = array($contents, $pgnParams['date'], $pgnParams['white'], $pgnParams['black'], $pgnParams['result']);
-
-        $statement = $dbHandler->prepare($query);
-        $statement->execute($params); 
+        
+        if (strlen($pgnParams['date']) >= 1 && strlen($pgnParams['white']) >= 1 && strlen($pgnParams['black']) >= 1)
+        {
+          $query = "INSERT INTO tblpgn (pgn_contents, pgn_date, pgn_white, pgn_black, pgn_res_id) VALUES (?, ?, ?, ?, ?)";
+          $params = array($contents, $pgnParams['date'], $pgnParams['white'], $pgnParams['black'], $pgnParams['result']);
+          
+          $statement = $dbHandler->prepare($query);
+          $statement->execute($params);
+          
+          Util::redirect(sprintf('pgn/view/%d', $dbHandler->lastInsertId()));
+        }
+        else
+          throw new Exception('Invalid PGN-file');
       }
     }
+    else if (array_key_exists('cancel', $_POST))
+      Util::redirect('pgn/search');
 
     $variables['docroot']  = APPLICATION_DOCROOT;
 
@@ -155,10 +150,55 @@ class Handler_Pgn extends Handler
           break;
         }
       }
-      
+
       $pgnParams[$field] = $pgnParam;
     }
 
     return $pgnParams;
+  }
+
+  public function view()
+  {
+    if (count($this->arguments) == 0)
+      Router::notFound();
+
+    $pgnId = array_shift($this->arguments);
+    $pgnFile = sprintf('%s/static/pgn/%04d.pgn', APPLICATION_PATH, $pgnId);
+
+    $dbHandler = Application::getInstance()->getDBHandler();
+
+    $query =
+      "SELECT pgn_id, pgn_white, pgn_black, pgn_date, pgn_contents, res_id, res_description " .
+      "FROM tblpgn " .
+      "LEFT JOIN tblresult ON res_id = pgn_res_id " .
+      "WHERE pgn_id = ?";
+    $params = array($pgnId);
+
+    $statement = $dbHandler->prepare($query);
+    $statement->execute($params);
+    $pgn = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if (!$pgn)
+      Router::notFound();
+
+    if (!file_exists($pgnFile))
+    {
+      $success = file_put_contents($pgnFile, $pgn['pgn_contents']);
+      if (!$success)
+        throw new Exception('Unable to view PGN');
+  }
+
+    $variables = array(
+      'docroot' => APPLICATION_DOCROOT,
+      'white'   => $pgn['pgn_white'],
+      'black'   => $pgn['pgn_black'],
+      'date'    => date('d-m-Y', strtotime($pgn['pgn_date'])),
+      'result'  => !is_null($pgn['res_id']) ? $pgn['res_description'] : 'Onbekend',
+      'pgn-id'  => sprintf('%04d', $pgnId)
+    );
+
+    $template = Util::getTemplate('pgn-view');
+
+    echo $this->formatTemplate(array('body' => Util::formatString($template, $variables)));
   }
 }
