@@ -68,7 +68,7 @@ class Router
 
   public static function allowUpload() {
     // to do: controleren of een gebruiker is ingelogd ipv een hardcoded IP te gebruiken
-    $whitelist = array('213.10.71.43');
+    $whitelist = array('83.162.42.56');
     return $_SERVER['HTTP_HOST'] == 'localhost' || in_array(Util::getIPAddress(), $whitelist);
   }
 
