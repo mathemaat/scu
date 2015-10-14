@@ -170,4 +170,17 @@ class Util
 
     return $post;
   }
+  
+  public static function addAlert($message, $type = 'normal', $fadeOut = false)
+  {
+    $classes = array($type);
+    
+    if ($fadeOut)
+      $classes[] = 'fade-out';
+    
+    if (!isset($_SESSION['alerts']))
+      $_SESSION['alerts'] = array();
+    
+    $_SESSION['alerts'][] = array('message' => $message, 'classes' => $classes);
+  }
 }

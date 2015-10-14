@@ -7,4 +7,14 @@ define('MYSQL_PASSWORD', '');
 
 define('POST_LIST_POST_LENGTH', 360);
 
+define('POSTS_PER_PAGE', 20);
+define('ITEMS_PER_PAGE', 50);
+
 define('APPLICATION_TITLE', 'Schaakclub Utrecht');
+
+define('EMAIL_VOORZITTER',             'egagraaf@planet.nl');
+define('EMAIL_SECRETARIS',             'wagenaarht@hotmail.com');
+define('EMAIL_PENNINGMEESTER',         'mathemaat@hotmail.com');
+define('EMAIL_INTERN_WEDSTRIJDLEIDER', 'drexciya28@gmail.com');
+define('EMAIL_EXTERN_WEDSTRIJDLEIDER', 'jmvoskuil@solcon.nl');
+define('EMAIL_WEBMASTER',              'mathemaat@hotmail.com');

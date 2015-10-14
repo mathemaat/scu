@@ -38,6 +38,7 @@ abstract class Handler
       'docroot' => APPLICATION_DOCROOT,
       'title'   => APPLICATION_TITLE,
       'menu'    => self::getMenu(),
+      'alerts'  => self::getAlerts(),
       'year'    => date('Y')
     );
   }
@@ -121,5 +122,29 @@ abstract class Handler
     );
 
     return Util::formatString($format, $variables);
+  }
+  
+  public static function getAlerts($unset = true)
+  {
+    if (!isset($_SESSION['alerts'])) return '';
+    
+    $html = "";
+    foreach ($_SESSION['alerts'] as $key => $alert)
+    {
+      if (count($alert['classes']) >= 1)
+        $class = 'alert ' . implode(' ', $alert['classes']);
+      else
+        $class = 'alert';
+      
+      $html .= sprintf(
+        "<div class='alert-%d %s'><span>%s</span><button class='close' type='button' onclick='$(\".alert-%d\").fadeOut();'>×</button></div>",
+        $key, $class, $alert['message'], $key
+      );
+    }
+    
+    if ($unset)
+      unset($_SESSION['alerts']);
+    
+    return $html;
   }
 }

@@ -20,6 +20,10 @@
 @input-border: 1px;
 @border-color: #bdbdbd;
 
+@alert-pink:   #efd1d8;
+@alert-green:  #d8efd1;
+@alert-yellow: #fff9db;
+
 body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, table, tr, th, td {
   font-weight: normal;
   margin: 0px;
@@ -143,6 +147,27 @@ div.centered {
 
   height: 200px;
   padding-top: 10px;
+  
+  div.left, div.right {
+    width: 50%;
+  }
+  
+  div.left {
+    float: left;
+  }
+  
+  div.right {
+    overflow: hidden;
+    
+    a {
+      color: @white;
+      font-weight: bold;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 #season-window {
@@ -347,7 +372,7 @@ form {
     margin: 0;
     padding: 0;
 
-    label, input, select, span {
+    label, input, select, span, textarea {
       float: left;
       display: block;
       margin: @form-margin;
@@ -375,6 +400,15 @@ form {
   }
 }
 
+form.contact fieldset {
+  label {
+    width: 140px;
+  }
+  input[type='text'] {
+    width: 400px;
+  }
+}
+
 form.pgn {
   @label-width: 200px;
   @input-width: 400px;
@@ -391,5 +425,44 @@ form.pgn {
     div.submit-buttons {
       margin-left: @label-width + 2 * (@form-margin + @form-padding);
     }
+  }
+}
+
+#alerts {
+  .alert {
+    padding: 4px;
+    margin: 4px auto;
+    border-width: 1px;
+    border-style: solid;
+  }
+  
+  div.alert.note {
+    background-color: @alert-yellow;
+    border: 1px solid darken(@alert-yellow, 20%);
+  }
+  
+  div.alert.success {
+    background-color: @alert-green;
+    border: 1px solid darken(@alert-green, 20%);
+  }
+  
+  div.alert.fail {
+    background-color: @alert-pink;
+    border: 1px solid darken(@alert-pink, 20%);
+  }
+  
+  button.close {
+    background: none;
+    border: 0px;
+    cursor: pointer;
+    padding: 0px;
+  }
+  
+  .close {
+    float: right;
+    font-weight: bold;
+    line-height: 1;
+    opacity: 0.2;
+    text-shadow: 0 1px 0 #FFFFFF;
   }
 }

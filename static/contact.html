@@ -1,0 +1,37 @@
+<div id="system" class="centered">
+  <h1>Contact</h1>
+  <p>
+    Door middel van het onderstaande formulier kunt u contact opnemen met het bestuur van SC Utrecht.
+  </p>
+  <form id="contact" class="contact" action="%(docroot)s/contact" method="post">
+      <fieldset>
+          <input type="hidden" name="captcha-answer" value="%(captcha-answer)s" />
+          <label for="name">Uw naam</label>
+          <input id="name" type="text" name="name" value="%(name)s" />
+          <label for="phone">Uw (mobiele) nummer</label>
+          <input id="phone" type="text" name="phone" value="%(phone)s" />
+          <label for="email">Uw e-mailadres</label>
+          <input id="email" type="text" name="email" value="%(email)s" />
+          <label for="to">Aan wie?</label>
+          <select id="to" name="to">
+            <option value="">Maak een keuze ...</option>
+            <option value="voorzitter">Voorzitter</option>
+            <option value="secretaris">Secretaris</option>
+            <option value="penningmeester">Penningmeester</option>
+            <option value="intern_wedstrijdleider">Intern wedstrijdleider</option>
+            <option value="extern_wedstrijdleider">Extern wedstrijdleider</option>
+            <option value="webmaster">Webmaster</option>
+          </select>
+          <label for="subject">Onderwerp</label>
+          <input id="subject" type="text" name="subject" value="%(subject)s" />
+          <label for="message">Bericht</label>
+          <textarea id="message" type="text" name="message" rows="8" cols="60">%(message)s</textarea>
+          <label for="captcha-answer">Controlevraag</label>
+          <input id="captcha-answer-given" type="text" name="captcha-answer-given" placeholder="%(captcha-question)s" />
+          <div class="submit-buttons">
+              <input type="submit" class="submit" name="send" value="Verzenden" />
+              <input type="submit" class="submit" name="cancel" value="Annuleren" />
+          </div>
+      </fieldset>
+  </form>
+</div>
